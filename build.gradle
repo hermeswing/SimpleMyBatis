@@ -37,7 +37,8 @@ dependencies {
 
     implementation 'org.aspectj:aspectjweaver'
 
-
+    implementation 'org.apache.poi:poi:5.2.5'
+    implementation 'org.apache.poi:poi-ooxml:5.2.5'
 
     // Default :: 1.16
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'  /* Log4JDBC */

@@ -62,6 +62,11 @@ public class PostController {
         return "post/list";
     }
 
+    @GetMapping( "/simple/simple.do" )
+    public String openSample( Model model ) {
+        return "simple/simple";
+    }
+
 
     // 게시글 상세 페이지
     @GetMapping("/post/view.do")

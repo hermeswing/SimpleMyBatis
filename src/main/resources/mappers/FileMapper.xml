@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.study.domain.file.FileMapper">
+<mapper namespace="octopus.domain.file.FileMapper">
 
     <!-- tb_file 테이블 전체 컬럼 -->
     <sql id="fileColumns">
@@ -37,7 +37,7 @@
 
 
     <!-- 파일 리스트 조회 -->
-    <select id="findAllByPostId" parameterType="long" resultType="com.study.domain.file.FileResponse">
+    <select id="findAllByPostId" parameterType="long" resultType="octopus.domain.file.FileResponse">
         SELECT
             <include refid="fileColumns" />
         FROM
@@ -51,7 +51,7 @@
 
 
     <!-- 파일 리스트 조회 -->
-    <select id="findAllByIds" parameterType="list" resultType="com.study.domain.file.FileResponse">
+    <select id="findAllByIds" parameterType="list" resultType="octopus.domain.file.FileResponse">
         SELECT
             <include refid="fileColumns" />
         FROM
@@ -82,7 +82,7 @@
 
 
     <!-- 파일 상세정보 조회 -->
-    <select id="findById" parameterType="long" resultType="com.study.domain.file.FileResponse">
+    <select id="findById" parameterType="long" resultType="octopus.domain.file.FileResponse">
         SELECT
             <include refid="fileColumns" />
         FROM
