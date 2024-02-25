@@ -21,16 +21,36 @@ public class SampleService {
      * @return Generated PK
      */
     @Transactional
-    public void saveExcel( final List<RawDto>  rawList) {
+    public void saveRrawExcel( final List<RawDto>  rawList) {
 
         for(RawDto rawDto : rawList) {
-            sampleMapper.save( rawDto );
+            sampleMapper.saveRrawExcel( rawDto );
         }
 
     }
 
     @Transactional
-    public void deleteAll() {
-        sampleMapper.deleteAll();
+    public void deleteRawAll() {
+        sampleMapper.deleteRawAll();
+    }
+
+    /**
+     * 엑셀 저장
+     *
+     * @param rawList - 엑셀 데이터
+     * @return Generated PK
+     */
+    @Transactional
+    public void danjiExcelSave( final List<RawDto>  rawList) {
+
+        for(RawDto rawDto : rawList) {
+            sampleMapper.saveDanjiExcel( rawDto );
+        }
+
+    }
+
+    @Transactional
+    public void deleteDanjiAll() {
+        sampleMapper.deleteDanjiAll();
     }
 }

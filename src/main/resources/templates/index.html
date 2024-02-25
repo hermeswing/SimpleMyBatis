@@ -11,7 +11,8 @@
     </div>
 
     <div class="content">
-        <button type="button" onclick="saveExcel()" class="signup_btn">엑셀 Loading</button>
+        <button type="button" onclick="rawExcelLoad()" class="btns fn_add_btn"><span>Raw 엑셀 Loading</span></button>
+        <button type="button" onclick="rawExcelLoad()" class="btns fn_add_btn"><span>Raw 엑셀 Loading</span></button>
     </div> <!--/* .content */-->
 </th:block>
 
@@ -19,14 +20,12 @@
 <th:block layout:fragment="script">
     <script th:inline="javascript">
         /*<![CDATA[*/
-        // 댓글 저장
-        function saveExcel() {
+        function rawExcelLoad() {
             const params = {
-                writer : '홍길동'
             }
 
             // _api.call(url, params, method, returnType, 실행전수행할함수, 성공callback함수, 실패callback함수);
-            _api.call(`/sample/save.do`, params, 'post', 'json', null, function(request, status, error) {
+            _api.call(`/sample/saveRawExcel.do`, params, 'post', 'json', null, function(request, status, error) {
                 alert('저장되었습니다.');
             }, function(request, status, error) {
                 console.log("request :: ", request);

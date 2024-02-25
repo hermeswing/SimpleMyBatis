@@ -4,83 +4,83 @@
 <mapper namespace="octopus.domain.sample.SampleMapper">
 
      <!-- Raw 저장 -->
-     <insert id="save" parameterType="octopus.domain.sample.RawDto" useGeneratedKeys="true" keyProperty="id">
-     INSERT INTO tb_raw (
-            doo                           -- 도                       0
-          , sigu                          -- 시구                     1
-          , dong1                         -- 동1                      2
-          , dong2                         -- 동2                      3
-          , maemul                        -- 매물번호                 4
-          , jiyeog                        -- 지역코드                 5
-          , danji                         -- 단지명                   6
-          , wolse                         -- 월세                     7
-          , jonglyu                       -- 부동산종류               8
-          , yuhyeong                      -- 유형                     9
-          , cheung                        -- 층                       10
-          , gagyeog                       -- 가격                     11
-          , myeonjeog1                    -- 공급면적                 12
-          , myeonjeog2                    -- 전용면적                 13
-          , dong                          -- 동                       14
-          , hyang                         -- 향                       15
-          , ilja                          -- 확인일자                 16
-          , bigo                          -- 비고                     17
-          , gagyeog2                      -- 가격2                    18
-          , gagyeog3                      -- 가격3                    19
-          , maejeon                       -- 매전구분                 20
-          , pyeong                        -- 평형                     21
-          , pyeongdae                     -- 평형대                   22
-          , danga                         -- 평당가                   23
-          , pyo                           -- 표                       24
-          , apateu                        -- 아파트코드_공급평형      25
-          , kbsise                        -- KB매매시세               26
-          , kbsise2                       -- KB매매하위시세           27
-          , kbsise3                       -- KB전세평균시세           28
-          , geubmae                       -- 급매여부                 29
-          , choejeo                       -- 최저시세대비             30
-          , biyul                         -- 최저시세대비율           31
-          , link1                         -- 링크                     32
-          , link2                         -- m링크                    33
-          , link3                         -- pc링크                   34
-          , link4                         -- pclink                   35
-     ) VALUES (
-            #{doo}                           -- 도                       0
-          , #{sigu}                          -- 시구                     1
-          , #{dong1}                         -- 동1                      2
-          , #{dong2}                         -- 동2                      3
-          , #{maemul}                        -- 매물번호                 4
-          , #{jiyeog}                        -- 지역코드                 5
-          , #{danji}                         -- 단지명                   6
-          , #{wolse}                         -- 월세                     7
-          , #{jonglyu}                       -- 부동산종류               8
-          , #{yuhyeong}                      -- 유형                     9
-          , #{cheung}                        -- 층                       10
-          , #{gagyeog}                       -- 가격                     11
-          , #{myeonjeog1}                    -- 공급면적                 12
-          , #{myeonjeog2}                    -- 전용면적                 13
-          , #{dong}                          -- 동                       14
-          , #{hyang}                         -- 향                       15
-          , #{ilja}                          -- 확인일자                 16
-          , #{bigo}                          -- 비고                     17
-          , #{gagyeog2}                      -- 가격2                    18
-          , #{gagyeog3}                      -- 가격3                    19
-          , #{maejeon}                       -- 매전구분                 20
-          , #{pyeong}                        -- 평형                     21
-          , #{pyeongdae}                     -- 평형대                   22
-          , #{danga}                         -- 평당가                   23
-          , #{pyo}                           -- 표                       24
-          , #{apateu}                        -- 아파트코드_공급평형      25
-          , #{kbsise}                        -- KB매매시세               26
-          , #{kbsise2}                       -- KB매매하위시세           27
-          , #{kbsise3}                       -- KB전세평균시세           28
-          , #{geubmae}                       -- 급매여부                 29
-          , #{choejeo}                       -- 최저시세대비             30
-          , #{biyul}                         -- 최저시세대비율           31
-          , #{link1}                         -- 링크                     32
-          , #{link2}                         -- m링크                    33
-          , #{link3}                         -- pc링크                   34
-          , #{link4}                         -- pclink                   35
-     )
-     </insert>
+    <insert id="saveRrawExcel" parameterType="octopus.domain.sample.RawDto" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO tb_raw (
+           doo                           -- 도                       0
+         , sigu                          -- 시구                     1
+         , dong1                         -- 동1                      2
+         , dong2                         -- 동2                      3
+         , maemul                        -- 매물번호                 4
+         , jiyeog                        -- 지역코드                 5
+         , danji                         -- 단지명                   6
+         , wolse                         -- 월세                     7
+         , jonglyu                       -- 부동산종류               8
+         , yuhyeong                      -- 유형                     9
+         , cheung                        -- 층                       10
+         , gagyeog                       -- 가격                     11
+         , myeonjeog1                    -- 공급면적                 12
+         , myeonjeog2                    -- 전용면적                 13
+         , dong                          -- 동                       14
+         , hyang                         -- 향                       15
+         , ilja                          -- 확인일자                 16
+         , bigo                          -- 비고                     17
+         , gagyeog2                      -- 가격2                    18
+         , gagyeog3                      -- 가격3                    19
+         , maejeon                       -- 매전구분                 20
+         , pyeong                        -- 평형                     21
+         , pyeongdae                     -- 평형대                   22
+         , danga                         -- 평당가                   23
+         , pyo                           -- 표                       24
+         , apateu                        -- 아파트코드_공급평형      25
+         , kbsise                        -- KB매매시세               26
+         , kbsise2                       -- KB매매하위시세           27
+         , kbsise3                       -- KB전세평균시세           28
+         , geubmae                       -- 급매여부                 29
+         , choejeo                       -- 최저시세대비             30
+         , biyul                         -- 최저시세대비율           31
+         , link1                         -- 링크                     32
+         , link2                         -- m링크                    33
+         , link3                         -- pc링크                   34
+         , link4                         -- pclink                   35
+    ) VALUES (
+           #{doo}                           -- 도                       0
+         , #{sigu}                          -- 시구                     1
+         , #{dong1}                         -- 동1                      2
+         , #{dong2}                         -- 동2                      3
+         , #{maemul}                        -- 매물번호                 4
+         , #{jiyeog}                        -- 지역코드                 5
+         , #{danji}                         -- 단지명                   6
+         , #{wolse}                         -- 월세                     7
+         , #{jonglyu}                       -- 부동산종류               8
+         , #{yuhyeong}                      -- 유형                     9
+         , #{cheung}                        -- 층                       10
+         , #{gagyeog}                       -- 가격                     11
+         , #{myeonjeog1}                    -- 공급면적                 12
+         , #{myeonjeog2}                    -- 전용면적                 13
+         , #{dong}                          -- 동                       14
+         , #{hyang}                         -- 향                       15
+         , #{ilja}                          -- 확인일자                 16
+         , #{bigo}                          -- 비고                     17
+         , #{gagyeog2}                      -- 가격2                    18
+         , #{gagyeog3}                      -- 가격3                    19
+         , #{maejeon}                       -- 매전구분                 20
+         , #{pyeong}                        -- 평형                     21
+         , #{pyeongdae}                     -- 평형대                   22
+         , #{danga}                         -- 평당가                   23
+         , #{pyo}                           -- 표                       24
+         , #{apateu}                        -- 아파트코드_공급평형      25
+         , #{kbsise}                        -- KB매매시세               26
+         , #{kbsise2}                       -- KB매매하위시세           27
+         , #{kbsise3}                       -- KB전세평균시세           28
+         , #{geubmae}                       -- 급매여부                 29
+         , #{choejeo}                       -- 최저시세대비             30
+         , #{biyul}                         -- 최저시세대비율           31
+         , #{link1}                         -- 링크                     32
+         , #{link2}                         -- m링크                    33
+         , #{link3}                         -- pc링크                   34
+         , #{link4}                         -- pclink                   35
+    )
+    </insert>
 
     <!-- Raw 저장 -->
     <insert id="save_old" parameterType="octopus.domain.sample.RawDto" useGeneratedKeys="true" keyProperty="id">
@@ -123,7 +123,7 @@
          , link4                         -- pclink                   35
     ) VALUES
          <foreach item="rawDto" collection="list" separator=",">
-          (
+    (
            #{rawDto.doo}                           -- 도                       0
          , #{rawDto.sigu}                          -- 시구                     1
          , #{rawDto.dong1}                         -- 동1                      2
@@ -164,7 +164,227 @@
          </foreach>
     </insert>
 
-    <delete id="deleteAll">
-         truncate tb_raw
+    <delete id="deleteRawAll">
+    truncate tb_raw
+    </delete>
+
+    <insert id="saveDanjiExcel" parameterType="octopus.domain.sample.DanjiDto" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO tb_raw (
+           bunho           -- 코드번호         0
+         , doo             -- 도               1
+         , sigu            -- 시구             2
+         , hscpNo          -- hscpNo           3
+         , hscpNm          -- hscpNm           4
+         , jiyeog          -- 지역코드         5
+    ) VALUES (
+           #{bunho}        -- 도               0
+         , #{doo}          -- 도               1
+         , #{sigu}         -- 시구             2
+         , #{hscpNo}       -- hscpNo           3
+         , #{hscpNm}       -- hscpNm           4
+         , #{jiyeog}       -- 지역코드         5
+    )
+    </insert>
+
+    <delete id="deleteDanjiAll">
+    truncate tb_danji
+    </delete>
+
+    <insert id="saveBasicExcel" parameterType="octopus.domain.sample.BasicDto" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO tb_basic (
+           index              -- index           0
+         , bunho              -- 코드번호        1
+         , doo                -- 도              2
+         , sigu               -- 시구            3
+         , hscpNo             -- hscpNo          4
+         , hscpNm             -- hscpNm          5
+         , url                -- url             6
+         , myeonjeog          -- 면적            7
+         , sedae              -- 세대수          8
+         , gocheung           -- 최저/최고층     9
+         , jucha              -- 주차대수        10
+         , sayongil           -- 사용승인일      11
+         , yongjeog           -- 용적율          12
+         , geonpye            -- 건폐율          13
+         , geonseol           -- 건설사          14
+         , nanbang            -- 난방            15
+         , jiyeog             -- 지역코드        16
+         , juso               -- 주소            17
+         , do1                -- 도1             18
+         , sigu1              -- 시구1           19
+         , dong1              -- 동1             20
+         , dong2              -- 동2             21
+    ) VALUES (
+           #{index}              -- index           0
+         , #{bunho}              -- 코드번호        1
+         , #{doo}                -- 도              2
+         , #{sigu}               -- 시구            3
+         , #{hscpNo}             -- hscpNo          4
+         , #{hscpNm}             -- hscpNm          5
+         , #{url}                -- url             6
+         , #{myeonjeog}          -- 면적            7
+         , #{sedae}              -- 세대수          8
+         , #{gocheung}           -- 최저/최고층     9
+         , #{jucha}              -- 주차대수        10
+         , #{sayongil}           -- 사용승인일      11
+         , #{yongjeog}           -- 용적율          12
+         , #{geonpye}            -- 건폐율          13
+         , #{geonseol}           -- 건설사          14
+         , #{nanbang}            -- 난방            15
+         , #{jiyeog}             -- 지역코드        16
+         , #{juso}               -- 주소            17
+         , #{do1}                -- 도1             18
+         , #{sigu1}              -- 시구1           19
+         , #{dong1}              -- 동1             20
+         , #{dong2}              -- 동2             21
+    )
+    </insert>
+
+    <delete id="deleteBasicAll">
+    truncate tb_basic
+    </delete>
+
+    <insert id="savePyeongExcel" parameterType="octopus.domain.sample.BasicDto" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO tb_pyeong (
+           bunho                            -- 코드번호                       0
+         , doo                              -- 도                             1
+         , sigu                             -- 시구                           2
+         , hscpNo                           -- hscpNo                         3
+         , hscpNm                           -- hscpNm                         4
+         , url                              -- url                            5
+         , ptpNo                            -- ptpNo                          6
+         , ptpNm                            -- ptpNm                          7
+         , splySpc                          -- splySpc                        8
+         , exclsSpc                         -- exclsSpc                       9
+         , splySpcPyeong0WithUnit           -- splySpcPyeong0WithUnit         10
+         , splySpcPyeong2WithUnit           -- splySpcPyeong2WithUnit         11
+         , exclsSpcPyeong2WithUnit          -- exclsSpcPyeong2WithUnit        12
+         , exclsRate                        -- exclsRate                      13
+         , ptybyTotHsehCnt                  -- ptybyTotHsehCnt                14
+         , hscpTypeCd                       -- hscpTypeCd                     15
+         , ptpOrder                         -- ptpOrder                       16
+         , ptpNmWithUnit                    -- ptpNmWithUnit                  17
+         , splySpcWithUnit                  -- splySpcWithUnit                18
+         , exclsSpcWithUnit                 -- exclsSpcWithUnit               19
+         , roomCnt                          -- roomCnt                        20
+         , bathroomCnt                      -- bathroomCnt                    21
+         , entranceType                     -- entranceType                   22
+         , splySpc2                         -- splySpc2                       23
+         , myeonjeog1                       -- 공급면적                       24
+    ) VALUES (
+           #{bunho}                            -- 코드번호                       0
+         , #{doo}                              -- 도                             1
+         , #{sigu}                             -- 시구                           2
+         , #{hscpNo}                           -- hscpNo                         3
+         , #{hscpNm}                           -- hscpNm                         4
+         , #{url}                              -- url                            5
+         , #{ptpNo}                            -- ptpNo                          6
+         , #{ptpNm}                            -- ptpNm                          7
+         , #{splySpc}                          -- splySpc                        8
+         , #{exclsSpc}                         -- exclsSpc                       9
+         , #{splySpcPyeong0WithUnit}           -- splySpcPyeong0WithUnit         10
+         , #{splySpcPyeong2WithUnit}           -- splySpcPyeong2WithUnit         11
+         , #{exclsSpcPyeong2WithUnit}          -- exclsSpcPyeong2WithUnit        12
+         , #{exclsRate}                        -- exclsRate                      13
+         , #{ptybyTotHsehCnt}                  -- ptybyTotHsehCnt                14
+         , #{hscpTypeCd}                       -- hscpTypeCd                     15
+         , #{ptpOrder}                         -- ptpOrder                       16
+         , #{ptpNmWithUnit}                    -- ptpNmWithUnit                  17
+         , #{splySpcWithUnit}                  -- splySpcWithUnit                18
+         , #{exclsSpcWithUnit}                 -- exclsSpcWithUnit               19
+         , #{roomCnt}                          -- roomCnt                        20
+         , #{bathroomCnt}                      -- bathroomCnt                    21
+         , #{entranceType}                     -- entranceType                   22
+         , #{splySpc2}                         -- splySpc2                       23
+         , #{myeonjeog1}                       -- 공급면적                       24
+    )
+    </insert>
+
+    <delete id="deletePyeongAll">
+    truncate tb_pyeong
+    </delete>
+
+
+    <insert id="saveJiyeogExcel" parameterType="octopus.domain.sample.JiyeogDto" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO tb_jiyeog (
+           doo                      -- 도코드             0
+         , sigu                     -- 시구코드           1
+         , dong                     -- 동코드             2
+         , code                     -- 코드8              3
+         , beobjeong                -- 법정동코드         4
+         , do1                      -- 도                 5
+         , sigu1                    -- 시구               6
+         , dong1                    -- 동1                7
+         , dong2                    -- 동2                8
+    ) VALUES (
+           #{doo}                      -- 도코드             0
+         , #{sigu}                     -- 시구코드           1
+         , #{dong}                     -- 동코드             2
+         , #{code}                     -- 코드8              3
+         , #{beobjeong}                -- 법정동코드         4
+         , #{do1}                      -- 도                 5
+         , #{sigu1}                    -- 시구               6
+         , #{dong1}                    -- 동1                7
+         , #{dong2}                    -- 동2                8
+    )
+    </insert>
+
+    <delete id="deleteJiyeogAll">
+    truncate tb_jiyeog
+    </delete>
+
+
+    <insert id="saveKbExcel" parameterType="octopus.domain.sample.JiyeogDto" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO tb_kb (
+           sigu                  -- 시구코드              0
+         , url                   -- url                   1
+         , danji                 -- 단지기본일련번호      2
+         , sisemagam             -- 시세마감년월일        3
+         , sisemulgeon           -- 시세물건식별자        4
+         , danjinm               -- 단지명                5
+         , beobjek               -- 법정동코드            6
+         , gyeyag                -- 계약면적              7
+         , gonggub               -- 공급면적              8
+         , jeonyong              -- 전용면적              9
+         , type                  -- 주택형타입내용        10
+         , gubun                 -- 연결구분명            11
+         , maemaega1             -- 매매.하위평균         12
+         , maemaega2             -- 매매.일반평균         13
+         , maemaega3             -- 매매.상위평균         14
+         , jeonse1               -- 전세.하위평균         15
+         , jeonse2               -- 전세.일반평균         16
+         , jeonse3               -- 전세.상위평균         17
+         , juso                  -- 주소                  18
+         , wolse                 -- 월세                  19
+         , naver                 -- naver_code            20
+         , vcode                 -- 공급면적_내림         21
+    ) VALUES (
+           #{sigu}                  -- 시구코드              0
+         , #{url}                   -- url                   1
+         , #{danji}                 -- 단지기본일련번호      2
+         , #{sisemagam}             -- 시세마감년월일        3
+         , #{sisemulgeon}           -- 시세물건식별자        4
+         , #{danjinm}               -- 단지명                5
+         , #{beobjek}               -- 법정동코드            6
+         , #{gyeyag}                -- 계약면적              7
+         , #{gonggub}               -- 공급면적              8
+         , #{jeonyong}              -- 전용면적              9
+         , #{type}                  -- 주택형타입내용        10
+         , #{gubun}                 -- 연결구분명            11
+         , #{maemaega1}             -- 매매.하위평균         12
+         , #{maemaega2}             -- 매매.일반평균         13
+         , #{maemaega3}             -- 매매.상위평균         14
+         , #{jeonse1}               -- 전세.하위평균         15
+         , #{jeonse2}               -- 전세.일반평균         16
+         , #{jeonse3}               -- 전세.상위평균         17
+         , #{juso}                  -- 주소                  18
+         , #{wolse}                 -- 월세                  19
+         , #{naver}                 -- naver_code            20
+         , #{vcode}                 -- 공급면적_내림         21
+    )
+    </insert>
+
+    <delete id="deleteKbAll">
+    truncate tb_kb
     </delete>
 </mapper>
