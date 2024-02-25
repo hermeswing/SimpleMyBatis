@@ -20,10 +20,16 @@
     <!-- 회원 정보 저장 (회원가입) -->
     <insert id="save" parameterType="octopus.domain.member.MemberRequest" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO tb_member (
-            <include refid="memberColumns" />
+              login_id
+            , password
+            , name
+            , gender
+            , birthday
+            , delete_yn
+            , created_date
+            , modified_date
         ) VALUES (
-              #{id}
-            , #{loginId}
+              #{loginId}
             , #{password}
             , #{name}
             , #{gender}

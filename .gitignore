@@ -42,4 +42,11 @@ bin/
 .DS_Store
 
 ### JRebel ###
-!**/src/resource/rebel.xml
+src/main/resources/rebel.xml
+caches/
+daemon/
+jdks/
+native/
+.tmp/
+.idea/
+wrapper/

@@ -1,5 +1,6 @@
-package octopus.base.common.file;
+package octopus.base.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import octopus.domain.file.FileRequest;
 import octopus.domain.file.FileResponse;
 import org.springframework.core.io.Resource;
@@ -9,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -20,10 +22,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Component
 public class FileUtils {
 
-    private final String uploadPath = Paths.get("C:", "develop", "upload-files").toString();
+    private String uploadPath = null;
+    private String osType = null;
+
+    @PostConstruct
+    public void init() {
+        osType = System.getProperty("os.name").toLowerCase();
+
+        if (osType.contains("win")) {
+            // Windows 경로 설정
+            uploadPath = Paths.get("C:\\Octopus", "upload-files").toString();
+        } else if (osType.contains("mac") || osType.contains("nix") || osType.contains("nux") || osType.contains("aix")) {
+            // MacOS 또는 Unix/Linux 경로 설정
+            uploadPath = Paths.get("Octopus", "upload-files").toString();
+        } else {
+            // 기타 운영 체제에서의 기본 경로 설정
+            uploadPath = Paths.get("Octopus", "upload-files").toString();
+        }
+    }
 
     /**
      * 다중 파일 업로드
@@ -56,6 +76,8 @@ public class FileUtils {
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyMMdd")).toString();
         String uploadPath = getUploadPath(today) + File.separator + saveName;
         File uploadFile = new File(uploadPath);
+
+        log.debug("uploadPath :: {}", uploadPath);
 
         try {
             multipartFile.transferTo(uploadFile);
@@ -154,6 +176,9 @@ public class FileUtils {
     public Resource readFileAsResource(final FileResponse file) {
         String uploadedDate = file.getCreatedDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyMMdd"));
         String filename = file.getSaveName();
+
+        log.debug("filename :: {}", filename);
+
         Path filePath = Paths.get(uploadPath, uploadedDate, filename);
         try {
             Resource resource = new UrlResource(filePath.toUri());
@@ -164,6 +189,10 @@ public class FileUtils {
         } catch (MalformedURLException e) {
             throw new RuntimeException("file not found : " + filePath.toString());
         }
+    }
+
+    public String getOsType() {
+        return osType;
     }
 
 }

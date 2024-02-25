@@ -1,6 +1,6 @@
 package octopus.domain.file;
 
-import octopus.base.common.file.FileUtils;
+import octopus.base.utils.FileUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

@@ -1,15 +1,7 @@
 package octopus.base.utils;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.binary.XSSFBSheetHandler.SheetContentsHandler;
 import org.apache.poi.xssf.eventusermodel.ReadOnlySharedStringsTable;
 import org.apache.poi.xssf.eventusermodel.XSSFReader;
@@ -19,6 +11,13 @@ import org.apache.poi.xssf.usermodel.XSSFComment;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
@@ -74,6 +73,59 @@ public class ExcelSheetHandler implements SheetContentsHandler {
 
             xmlReader.parse(inputSource);
             inputStream.close();
+            opc.close();
+
+        } catch (Exception e) {
+            // 에러 발생했을때 하시고 싶은 TO-DO
+        }
+
+        return sheetHandler;
+
+    }// readExcel - end
+
+    public static ExcelSheetHandler readSheets( File file, int sheetNo ) throws Exception {
+
+        ExcelSheetHandler sheetHandler = new ExcelSheetHandler();
+        try {
+
+            // org.apache.poi.openxml4j.opc.OPCPackage
+            OPCPackage opc = OPCPackage.open(file);
+
+            // org.apache.poi.xssf.eventusermodel.XSSFReader
+            XSSFReader xssfReader = new XSSFReader(opc);
+
+            // org.apache.poi.xssf.model.StylesTable
+            StylesTable styles = xssfReader.getStylesTable();
+
+            // org.apache.poi.xssf.eventusermodel.ReadOnlySharedStringsTable
+            ReadOnlySharedStringsTable strings = new ReadOnlySharedStringsTable(opc);
+
+            InputStream              inputStream  = null;
+            InputSource              inputSource  = null;
+            ContentHandler           handle       = null;
+            XSSFReader.SheetIterator sheets       = (XSSFReader.SheetIterator) xssfReader.getSheetsData();
+
+            while (sheets.hasNext()) {
+                inputStream = xssfReader.getSheetsData().next();
+
+                // org.xml.sax.InputSource
+                inputSource = new InputSource( inputStream );
+
+                // org.xml.sax.Contenthandler
+                handle = new XSSFSheetXMLHandler( styles, strings, sheetHandler, false );
+
+                // XMLReader xmlReader = SAXHelper.newXMLReader(); // deprecated
+                SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+                saxParserFactory.setNamespaceAware( true );
+                SAXParser parser = saxParserFactory.newSAXParser();
+                XMLReader xmlReader = parser.getXMLReader();
+                xmlReader.setContentHandler( handle );
+
+                xmlReader.parse( inputSource );
+
+                inputStream.close();
+            }
+
             opc.close();
 
         } catch (Exception e) {

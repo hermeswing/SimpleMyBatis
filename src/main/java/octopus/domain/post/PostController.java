@@ -2,7 +2,7 @@ package octopus.domain.post;
 
 import octopus.base.common.dto.MessageDto;
 import octopus.base.common.dto.SearchDto;
-import octopus.base.common.file.FileUtils;
+import octopus.base.utils.FileUtils;
 import octopus.base.common.paging.PagingResponse;
 import octopus.domain.file.FileRequest;
 import octopus.domain.file.FileResponse;
@@ -61,12 +61,6 @@ public class PostController {
         model.addAttribute("response", response);
         return "post/list";
     }
-
-    @GetMapping( "/simple/simple.do" )
-    public String openSample( Model model ) {
-        return "simple/simple";
-    }
-
 
     // 게시글 상세 페이지
     @GetMapping("/post/view.do")

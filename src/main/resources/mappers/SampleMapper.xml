@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="octopus.domain.sample.SampleMapper">
+
+     <!-- Raw 저장 -->
+     <insert id="save" parameterType="octopus.domain.sample.RawDto" useGeneratedKeys="true" keyProperty="id">
+     INSERT INTO tb_raw (
+            doo                           -- 도                       0
+          , sigu                          -- 시구                     1
+          , dong1                         -- 동1                      2
+          , dong2                         -- 동2                      3
+          , maemul                        -- 매물번호                 4
+          , jiyeog                        -- 지역코드                 5
+          , danji                         -- 단지명                   6
+          , wolse                         -- 월세                     7
+          , jonglyu                       -- 부동산종류               8
+          , yuhyeong                      -- 유형                     9
+          , cheung                        -- 층                       10
+          , gagyeog                       -- 가격                     11
+          , myeonjeog1                    -- 공급면적                 12
+          , myeonjeog2                    -- 전용면적                 13
+          , dong                          -- 동                       14
+          , hyang                         -- 향                       15
+          , ilja                          -- 확인일자                 16
+          , bigo                          -- 비고                     17
+          , gagyeog2                      -- 가격2                    18
+          , gagyeog3                      -- 가격3                    19
+          , maejeon                       -- 매전구분                 20
+          , pyeong                        -- 평형                     21
+          , pyeongdae                     -- 평형대                   22
+          , danga                         -- 평당가                   23
+          , pyo                           -- 표                       24
+          , apateu                        -- 아파트코드_공급평형      25
+          , kbsise                        -- KB매매시세               26
+          , kbsise2                       -- KB매매하위시세           27
+          , kbsise3                       -- KB전세평균시세           28
+          , geubmae                       -- 급매여부                 29
+          , choejeo                       -- 최저시세대비             30
+          , biyul                         -- 최저시세대비율           31
+          , link1                         -- 링크                     32
+          , link2                         -- m링크                    33
+          , link3                         -- pc링크                   34
+          , link4                         -- pclink                   35
+     ) VALUES (
+            #{doo}                           -- 도                       0
+          , #{sigu}                          -- 시구                     1
+          , #{dong1}                         -- 동1                      2
+          , #{dong2}                         -- 동2                      3
+          , #{maemul}                        -- 매물번호                 4
+          , #{jiyeog}                        -- 지역코드                 5
+          , #{danji}                         -- 단지명                   6
+          , #{wolse}                         -- 월세                     7
+          , #{jonglyu}                       -- 부동산종류               8
+          , #{yuhyeong}                      -- 유형                     9
+          , #{cheung}                        -- 층                       10
+          , #{gagyeog}                       -- 가격                     11
+          , #{myeonjeog1}                    -- 공급면적                 12
+          , #{myeonjeog2}                    -- 전용면적                 13
+          , #{dong}                          -- 동                       14
+          , #{hyang}                         -- 향                       15
+          , #{ilja}                          -- 확인일자                 16
+          , #{bigo}                          -- 비고                     17
+          , #{gagyeog2}                      -- 가격2                    18
+          , #{gagyeog3}                      -- 가격3                    19
+          , #{maejeon}                       -- 매전구분                 20
+          , #{pyeong}                        -- 평형                     21
+          , #{pyeongdae}                     -- 평형대                   22
+          , #{danga}                         -- 평당가                   23
+          , #{pyo}                           -- 표                       24
+          , #{apateu}                        -- 아파트코드_공급평형      25
+          , #{kbsise}                        -- KB매매시세               26
+          , #{kbsise2}                       -- KB매매하위시세           27
+          , #{kbsise3}                       -- KB전세평균시세           28
+          , #{geubmae}                       -- 급매여부                 29
+          , #{choejeo}                       -- 최저시세대비             30
+          , #{biyul}                         -- 최저시세대비율           31
+          , #{link1}                         -- 링크                     32
+          , #{link2}                         -- m링크                    33
+          , #{link3}                         -- pc링크                   34
+          , #{link4}                         -- pclink                   35
+     )
+     </insert>
+
+    <!-- Raw 저장 -->
+    <insert id="save_old" parameterType="octopus.domain.sample.RawDto" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO tb_raw (
+           doo                           -- 도                       0
+         , sigu                          -- 시구                     1
+         , dong1                         -- 동1                      2
+         , dong2                         -- 동2                      3
+         , maemul                        -- 매물번호                 4
+         , jiyeog                        -- 지역코드                 5
+         , danji                         -- 단지명                   6
+         , wolse                         -- 월세                     7
+         , jonglyu                       -- 부동산종류               8
+         , yuhyeong                      -- 유형                     9
+         , cheung                        -- 층                       10
+         , gagyeog                       -- 가격                     11
+         , myeonjeog1                    -- 공급면적                 12
+         , myeonjeog2                    -- 전용면적                 13
+         , dong                          -- 동                       14
+         , hyang                         -- 향                       15
+         , ilja                          -- 확인일자                 16
+         , bigo                          -- 비고                     17
+         , gagyeog2                      -- 가격2                    18
+         , gagyeog3                      -- 가격3                    19
+         , maejeon                       -- 매전구분                 20
+         , pyeong                        -- 평형                     21
+         , pyeongdae                     -- 평형대                   22
+         , danga                         -- 평당가                   23
+         , pyo                           -- 표                       24
+         , apateu                        -- 아파트코드_공급평형      25
+         , kbsise                        -- KB매매시세               26
+         , kbsise2                       -- KB매매하위시세           27
+         , kbsise3                       -- KB전세평균시세           28
+         , geubmae                       -- 급매여부                 29
+         , choejeo                       -- 최저시세대비             30
+         , biyul                         -- 최저시세대비율           31
+         , link1                         -- 링크                     32
+         , link2                         -- m링크                    33
+         , link3                         -- pc링크                   34
+         , link4                         -- pclink                   35
+    ) VALUES
+         <foreach item="rawDto" collection="list" separator=",">
+          (
+           #{rawDto.doo}                           -- 도                       0
+         , #{rawDto.sigu}                          -- 시구                     1
+         , #{rawDto.dong1}                         -- 동1                      2
+         , #{rawDto.dong2}                         -- 동2                      3
+         , #{rawDto.maemul}                        -- 매물번호                 4
+         , #{rawDto.jiyeog}                        -- 지역코드                 5
+         , #{rawDto.danji}                         -- 단지명                   6
+         , #{rawDto.wolse}                         -- 월세                     7
+         , #{rawDto.jonglyu}                       -- 부동산종류               8
+         , #{rawDto.yuhyeong}                      -- 유형                     9
+         , #{rawDto.cheung}                        -- 층                       10
+         , #{rawDto.gagyeog}                       -- 가격                     11
+         , #{rawDto.myeonjeog1}                    -- 공급면적                 12
+         , #{rawDto.myeonjeog2}                    -- 전용면적                 13
+         , #{rawDto.dong}                          -- 동                       14
+         , #{rawDto.hyang}                         -- 향                       15
+         , #{rawDto.ilja}                          -- 확인일자                 16
+         , #{rawDto.bigo}                          -- 비고                     17
+         , #{rawDto.gagyeog2}                      -- 가격2                    18
+         , #{rawDto.gagyeog3}                      -- 가격3                    19
+         , #{rawDto.maejeon}                       -- 매전구분                 20
+         , #{rawDto.pyeong}                        -- 평형                     21
+         , #{rawDto.pyeongdae}                     -- 평형대                   22
+         , #{rawDto.danga}                         -- 평당가                   23
+         , #{rawDto.pyo}                           -- 표                       24
+         , #{rawDto.apateu}                        -- 아파트코드_공급평형      25
+         , #{rawDto.kbsise}                        -- KB매매시세               26
+         , #{rawDto.kbsise2}                       -- KB매매하위시세           27
+         , #{rawDto.kbsise3}                       -- KB전세평균시세           28
+         , #{rawDto.geubmae}                       -- 급매여부                 29
+         , #{rawDto.choejeo}                       -- 최저시세대비             30
+         , #{rawDto.biyul}                         -- 최저시세대비율           31
+         , #{rawDto.link1}                         -- 링크                     32
+         , #{rawDto.link2}                         -- m링크                    33
+         , #{rawDto.link3}                         -- pc링크                   34
+         , #{rawDto.link4}                         -- pclink                   35
+    )
+         </foreach>
+    </insert>
+
+    <delete id="deleteAll">
+         truncate tb_raw
+    </delete>
+</mapper>

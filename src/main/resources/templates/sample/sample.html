@@ -4,4 +4,53 @@
         <title>샘플 페이지</title>
     </th:block>
 
+    <th:block layout:fragment="content">
+        <div class="page_tits">
+            <h3>SAMPLE 관리</h3>
+            <p class="path"><strong>현재 위치 :</strong> <span>SAMPLE 관리</span> <span>리스트형</span> <span>리스트</span></p>
+        </div>
+
+        <div class="content">
+            <section>
+                <!--/* 검색 */-->
+                <div class="search_box">
+                    <form id="excuteForm" onsubmit="return false;" autocomplete="off">
+                        <div class="sch_group fl">
+                            <button type="button" class="btn_bdr1" onclick="excute();"><i class="fas fa-search"></i><span class="skip_info">검색</span></button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div> <!--/* .content */-->
+    </th:block>
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+            function login() {
+                const form = document.getElementById('excuteForm');
+
+                if ( !form.loginId.value || !form.password.value ) {
+                    alert('아이디와 비밀번호를 모두 입력해 주세요.');
+                    form.loginId.focus();
+                    return false;
+                }
+
+                $.ajax({
+                    url : '/login',
+                    type : 'POST',
+                    dataType : 'json',
+                    data : {
+                        loginId: form.loginId.value,
+                        password: form.password.value
+                    },
+                    async : false,
+                    success : function (response) {
+                        location.href = '/post/list.do';
+                    },
+                    error : function (request, status, error) {
+                        alert('아이디와 비밀번호를 확인해 주세요.');
+                    }
+                })
+            }
+        </script>
+    </th:block>
 </html>

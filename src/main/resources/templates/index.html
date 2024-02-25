@@ -1,17 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<th:block layout:fragment="title">
+    <title>Index 페이지</title>
+</th:block>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="Generator" content="EditPlus®">
-    <meta name="Author" content="">
-    <meta name="Keywords" content="">
-    <meta name="Description" content="">
-    <title>Document</title>
-</head>
+<th:block layout:fragment="content">
+    <div class="page_tits">
+        <h3>게시판 관리</h3>
+        <p class="path"><strong>현재 위치 :</strong> <span>메인 페이지</span> <span>리스트형</span> <span>리스트</span></p>
+    </div>
 
-<body>
-인덱스 페이지 입니다.
-</body>
+    <div class="content">
+        <button type="button" onclick="saveExcel()" class="signup_btn">엑셀 Loading</button>
+    </div> <!--/* .content */-->
+</th:block>
 
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        // 댓글 저장
+        function saveExcel() {
+            const params = {
+                writer : '홍길동'
+            }
+
+            // _api.call(url, params, method, returnType, 실행전수행할함수, 성공callback함수, 실패callback함수);
+            _api.call(`/sample/save.do`, params, 'post', 'json', null, function(request, status, error) {
+                alert('저장되었습니다.');
+            }, function(request, status, error) {
+                console.log("request :: ", request);
+                const result = request.responseJSON == null ? JSON.parse(request.responseText) : request.responseJSON;
+                //console.log("result.msg :: ", result.msg);
+                alert(result.msg);
+            });
+        }
+        /*]]>*/
+    </script>
+</th:block>
 </html>
