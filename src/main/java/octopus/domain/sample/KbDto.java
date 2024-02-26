@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class KbDto {
 
+    private Long id;                      // PK
     private String sigu;                  // 시구코드              0
     private String url;                   // url                   1
     private String danji;                 // 단지기본일련번호      2

@@ -41,7 +41,7 @@ public class SampleService {
      * @return Generated PK
      */
     @Transactional
-    public void danjiExcelSave( final List<DanjiDto> danjiList ) {
+    public void saveDanjiExcel( final List<DanjiDto> danjiList ) {
 
         for( DanjiDto danjiDto : danjiList ) {
             sampleMapper.saveDanjiExcel( danjiDto );
@@ -70,7 +70,7 @@ public class SampleService {
     }
 
     @Transactional
-    public void saveBasicExcel() {
+    public void deleteBasicAll() {
         sampleMapper.deleteBasicAll();
     }
 
@@ -90,7 +90,7 @@ public class SampleService {
     }
 
     @Transactional
-    public void savePyeongExcel() {
+    public void deletePyeongAll() {
         sampleMapper.deletePyeongAll();
     }
 
@@ -104,14 +104,14 @@ public class SampleService {
     public void saveJiyeogExcel( final List<JiyeogDto> jiyeogList ) {
 
         for( JiyeogDto jiyeogDto : jiyeogList ) {
-            sampleMapper.saveJiyoegExcel( jiyeogDto );
+            sampleMapper.saveJiyeogExcel( jiyeogDto );
         }
 
     }
 
     @Transactional
-    public void deleteJiyoegAll() {
-        sampleMapper.deleteJiyoegAll();
+    public void deleteJiyeogAll() {
+        sampleMapper.deleteJiyeogAll();
     }
 
     /**
@@ -130,7 +130,7 @@ public class SampleService {
     }
 
     @Transactional
-    public void saveKbExcel() {
+    public void deleteKbAll() {
         sampleMapper.deleteKbAll();
     }
 }

@@ -169,7 +169,7 @@
     </delete>
 
     <insert id="saveDanjiExcel" parameterType="octopus.domain.sample.DanjiDto" useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO tb_raw (
+    INSERT INTO tb_danji (
            bunho           -- 코드번호         0
          , doo             -- 도               1
          , sigu            -- 시구             2
@@ -246,57 +246,59 @@
 
     <insert id="savePyeongExcel" parameterType="octopus.domain.sample.BasicDto" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO tb_pyeong (
-           bunho                            -- 코드번호                       0
-         , doo                              -- 도                             1
-         , sigu                             -- 시구                           2
-         , hscpNo                           -- hscpNo                         3
-         , hscpNm                           -- hscpNm                         4
-         , url                              -- url                            5
-         , ptpNo                            -- ptpNo                          6
-         , ptpNm                            -- ptpNm                          7
-         , splySpc                          -- splySpc                        8
-         , exclsSpc                         -- exclsSpc                       9
-         , splySpcPyeong0WithUnit           -- splySpcPyeong0WithUnit         10
-         , splySpcPyeong2WithUnit           -- splySpcPyeong2WithUnit         11
-         , exclsSpcPyeong2WithUnit          -- exclsSpcPyeong2WithUnit        12
-         , exclsRate                        -- exclsRate                      13
-         , ptybyTotHsehCnt                  -- ptybyTotHsehCnt                14
-         , hscpTypeCd                       -- hscpTypeCd                     15
-         , ptpOrder                         -- ptpOrder                       16
-         , ptpNmWithUnit                    -- ptpNmWithUnit                  17
-         , splySpcWithUnit                  -- splySpcWithUnit                18
-         , exclsSpcWithUnit                 -- exclsSpcWithUnit               19
-         , roomCnt                          -- roomCnt                        20
-         , bathroomCnt                      -- bathroomCnt                    21
-         , entranceType                     -- entranceType                   22
-         , splySpc2                         -- splySpc2                       23
-         , myeonjeog1                       -- 공급면적                       24
+           index                            -- index                          0
+         , bunho                            -- 코드번호                       1
+         , doo                              -- 도                             2
+         , sigu                             -- 시구                           3
+         , hscpNo                           -- hscpNo                         4
+         , hscpNm                           -- hscpNm                         5
+         , url                              -- url                            6
+         , ptpNo                            -- ptpNo                          7
+         , ptpNm                            -- ptpNm                          8
+         , splySpc                          -- splySpc                        9
+         , exclsSpc                         -- exclsSpc                       10
+         , splySpcPyeong0WithUnit           -- splySpcPyeong0WithUnit         11
+         , splySpcPyeong2WithUnit           -- splySpcPyeong2WithUnit         12
+         , exclsSpcPyeong2WithUnit          -- exclsSpcPyeong2WithUnit        13
+         , exclsRate                        -- exclsRate                      14
+         , ptybyTotHsehCnt                  -- ptybyTotHsehCnt                15
+         , hscpTypeCd                       -- hscpTypeCd                     16
+         , ptpOrder                         -- ptpOrder                       17
+         , ptpNmWithUnit                    -- ptpNmWithUnit                  18
+         , splySpcWithUnit                  -- splySpcWithUnit                19
+         , exclsSpcWithUnit                 -- exclsSpcWithUnit               20
+         , roomCnt                          -- roomCnt                        21
+         , bathroomCnt                      -- bathroomCnt                    22
+         , entranceType                     -- entranceType                   23
+         , splySpc2                         -- splySpc2                       24
+         , myeonjeog1                       -- 공급면적                       25
     ) VALUES (
-           #{bunho}                            -- 코드번호                       0
-         , #{doo}                              -- 도                             1
-         , #{sigu}                             -- 시구                           2
-         , #{hscpNo}                           -- hscpNo                         3
-         , #{hscpNm}                           -- hscpNm                         4
-         , #{url}                              -- url                            5
-         , #{ptpNo}                            -- ptpNo                          6
-         , #{ptpNm}                            -- ptpNm                          7
-         , #{splySpc}                          -- splySpc                        8
-         , #{exclsSpc}                         -- exclsSpc                       9
-         , #{splySpcPyeong0WithUnit}           -- splySpcPyeong0WithUnit         10
-         , #{splySpcPyeong2WithUnit}           -- splySpcPyeong2WithUnit         11
-         , #{exclsSpcPyeong2WithUnit}          -- exclsSpcPyeong2WithUnit        12
-         , #{exclsRate}                        -- exclsRate                      13
-         , #{ptybyTotHsehCnt}                  -- ptybyTotHsehCnt                14
-         , #{hscpTypeCd}                       -- hscpTypeCd                     15
-         , #{ptpOrder}                         -- ptpOrder                       16
-         , #{ptpNmWithUnit}                    -- ptpNmWithUnit                  17
-         , #{splySpcWithUnit}                  -- splySpcWithUnit                18
-         , #{exclsSpcWithUnit}                 -- exclsSpcWithUnit               19
-         , #{roomCnt}                          -- roomCnt                        20
-         , #{bathroomCnt}                      -- bathroomCnt                    21
-         , #{entranceType}                     -- entranceType                   22
-         , #{splySpc2}                         -- splySpc2                       23
-         , #{myeonjeog1}                       -- 공급면적                       24
+           #{index}                            -- index                          0
+         , #{bunho}                            -- 코드번호                       1
+         , #{doo}                              -- 도                             2
+         , #{sigu}                             -- 시구                           3
+         , #{hscpNo}                           -- hscpNo                         4
+         , #{hscpNm}                           -- hscpNm                         5
+         , #{url}                              -- url                            6
+         , #{ptpNo}                            -- ptpNo                          7
+         , #{ptpNm}                            -- ptpNm                          8
+         , #{splySpc}                          -- splySpc                        9
+         , #{exclsSpc}                         -- exclsSpc                       10
+         , #{splySpcPyeong0WithUnit}           -- splySpcPyeong0WithUnit         11
+         , #{splySpcPyeong2WithUnit}           -- splySpcPyeong2WithUnit         12
+         , #{exclsSpcPyeong2WithUnit}          -- exclsSpcPyeong2WithUnit        13
+         , #{exclsRate}                        -- exclsRate                      14
+         , #{ptybyTotHsehCnt}                  -- ptybyTotHsehCnt                15
+         , #{hscpTypeCd}                       -- hscpTypeCd                     16
+         , #{ptpOrder}                         -- ptpOrder                       17
+         , #{ptpNmWithUnit}                    -- ptpNmWithUnit                  18
+         , #{splySpcWithUnit}                  -- splySpcWithUnit                19
+         , #{exclsSpcWithUnit}                 -- exclsSpcWithUnit               20
+         , #{roomCnt}                          -- roomCnt                        21
+         , #{bathroomCnt}                      -- bathroomCnt                    22
+         , #{entranceType}                     -- entranceType                   23
+         , #{splySpc2}                         -- splySpc2                       24
+         , #{myeonjeog1}                       -- 공급면적                       25
     )
     </insert>
 

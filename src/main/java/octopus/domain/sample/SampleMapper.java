@@ -47,9 +47,9 @@ public interface SampleMapper {
      *
      * @param jiyeogDto - 지역정보 데이터
      */
-    void saveJiyoegExcel( JiyeogDto jiyeogDto);
+    void saveJiyeogExcel( JiyeogDto jiyeogDto);
 
-    void deleteJiyoegAll();
+    void deleteJiyeogAll();
 
     /**
      * KB 데이터 저장

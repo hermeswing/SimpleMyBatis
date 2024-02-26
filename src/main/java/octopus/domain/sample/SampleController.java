@@ -1,7 +1,6 @@
 package octopus.domain.sample;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import octopus.base.common.dto.MessageDto;
 import octopus.base.model.SingleResult;
@@ -12,6 +11,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.util.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +46,7 @@ public class SampleController {
     @Value( "${pyeong.file.path}" )
     private String pyeongFilePath;
 
-    @Value( "${jiyoeg.file.path}" )
+    @Value( "${jiyeog.file.path}" )
     private String jiyoegFilePath;
 
     @Value( "${kb.file.path}" )
@@ -84,8 +85,9 @@ public class SampleController {
             // 각 행을 반복하면서 데이터 읽기
             for( Row row : sheet ) {
                 if( row.getRowNum() == 0 ) continue;
-                if( row.getRowNum() <= 44100 ) continue;
-                if( row.getRowNum() >= 44150 ) break;
+                //if( row.getRowNum() > 50 ) continue;
+                //if( row.getRowNum() <= 44100 ) continue;
+                //if( row.getRowNum() >= 44150 ) break;
 
                 rawDto = new RawDto();
                 // 각 셀을 반복하면서 데이터 읽기
@@ -208,7 +210,7 @@ public class SampleController {
 
                 rawList.add( rawDto );
                 if( row.getRowNum() % 100 == 0 ) {
-                    //sampleService.saveRawExcel( rawList );
+                    sampleService.saveRawExcel( rawList );
 
                     //log.debug("100건 단위 :: {}", rawList);
 
@@ -217,7 +219,7 @@ public class SampleController {
             }
 
             log.debug( "남은 데이터 :: {}", rawList );
-            //sampleService.saveRawExcel( rawList );
+            sampleService.saveRawExcel( rawList );
 
         } catch( IOException e ) {
             log.debug( "엑셀 파일을 읽는 중 오류 발생 :: {}", e.getMessage() );
@@ -250,7 +252,7 @@ public class SampleController {
         FileInputStream fileInputStream = null;
         Workbook workbook = null;
 
-        sampleService.deleteRawAll();
+        sampleService.deleteDanjiAll();
 
         try {
             // 엑셀 파일 읽기
@@ -265,7 +267,7 @@ public class SampleController {
             // 각 행을 반복하면서 데이터 읽기
             for( Row row : sheet ) {
                 if( row.getRowNum() == 0 ) continue;
-                if( row.getRowNum() <= 50 ) continue;
+                //if( row.getRowNum() > 50 ) continue;
                 //if( row.getRowNum() >= 44150 ) break;
 
                 danjiDto = new DanjiDto();
@@ -295,11 +297,11 @@ public class SampleController {
                     }
                 }
 
-                if( danjiDto.getDoo() == null || danjiDto.getDoo().isEmpty() ) continue;
+                if( danjiDto.getBunho() == null || danjiDto.getBunho().isEmpty() ) continue;
 
                 danjiList.add( danjiDto );
                 if( row.getRowNum() % 100 == 0 ) {
-                    //sampleService.saveDanjiExcel( rawList );
+                    sampleService.saveDanjiExcel( danjiList );
 
                     //log.debug("100건 단위 :: {}", rawList);
 
@@ -308,7 +310,7 @@ public class SampleController {
             }
 
             log.debug( "남은 데이터 :: {}", danjiList );
-            //sampleService.saveDanjiExcel( rawList );
+            sampleService.saveDanjiExcel( danjiList );
 
         } catch( IOException e ) {
             log.debug( "엑셀 파일을 읽는 중 오류 발생 :: {}", e.getMessage() );
@@ -341,7 +343,7 @@ public class SampleController {
         FileInputStream fileInputStream = null;
         Workbook workbook = null;
 
-        sampleService.deleteRawAll();
+        sampleService.deleteBasicAll();
 
         try {
             // 엑셀 파일 읽기
@@ -351,55 +353,102 @@ public class SampleController {
             log.debug( "시트갯수 :: {}", workbook.getNumberOfSheets() );
 
             Sheet sheet = workbook.getSheetAt( 1 );   // 첫 번째 시트 선택
-            DanjiDto danjiDto = null;
-            List<DanjiDto> danjiList = new ArrayList<>();
+            BasicDto basicDto = null;
+            List<BasicDto> basicList = new ArrayList<>();
             // 각 행을 반복하면서 데이터 읽기
             for( Row row : sheet ) {
                 if( row.getRowNum() == 0 ) continue;
-                if( row.getRowNum() <= 50 ) continue;
+                //if( row.getRowNum() > 50 ) continue;
                 //if( row.getRowNum() >= 44150 ) break;
 
-                danjiDto = new DanjiDto();
+                basicDto = new BasicDto();
                 // 각 셀을 반복하면서 데이터 읽기
                 for( Cell cell : row ) {
                     //log.debug( "Index :: {} cell.getStringCellValue() :: {}", cell.getColumnIndex(), convString(cell) );
 
                     switch( cell.getColumnIndex() ) {
-                        case 0:       // 코드번호
-                            danjiDto.setBunho( convString( cell ) );
+                        case 0:       // index
+                            basicDto.setIndex( convString( cell ) );
                             break;
-                        case 1:       // 도
-                            danjiDto.setDoo( convString( cell ) );
+                        case 1:       // 코드번호
+                            basicDto.setBunho( convString( cell ) );
                             break;
-                        case 2:       // 시구
-                            danjiDto.setSigu( convString( cell ) );
+                        case 2:       // 도
+                            basicDto.setDoo( convString( cell ) );
                             break;
-                        case 3:       // hscpNo
-                            danjiDto.setHscpNo( convString( cell ) );
+                        case 3:       // 시구
+                            basicDto.setSigu( convString( cell ) );
                             break;
-                        case 4:       // hscpNm
-                            danjiDto.setHscpNm( convString( cell ) );
+                        case 4:       // hscpNo
+                            basicDto.setHscpNo( convString( cell ) );
                             break;
-                        case 5:       // 지역코드
-                            danjiDto.setJiyeog( convString( cell ) );
+                        case 5:       // hscpNm
+                            basicDto.setHscpNm( convString( cell ) );
+                            break;
+                        case 6:       // url
+                            basicDto.setUrl( convString( cell ) );
+                            break;
+                        case 7:       // 면적
+                            basicDto.setMyeonjeog( convString( cell ) );
+                            break;
+                        case 8:       // 세대수
+                            basicDto.setSedae( convString( cell ) );
+                            break;
+                        case 9:       // 최저/최고층
+                            basicDto.setGocheung( convString( cell ) );
+                            break;
+                        case 10:       // 주차대수
+                            basicDto.setJucha( convString( cell ) );
+                            break;
+                        case 11:       // 사용승인일
+                            basicDto.setSayongil( convString( cell ) );
+                            break;
+                        case 12:       // 용적율
+                            basicDto.setYongjeog( convString( cell ) );
+                            break;
+                        case 13:       // 건폐율
+                            basicDto.setGeonpye( convString( cell ) );
+                            break;
+                        case 14:       // 건설사
+                            basicDto.setGeonseol( convString( cell ) );
+                            break;
+                        case 15:       // 난방
+                            basicDto.setNanbang( convString( cell ) );
+                            break;
+                        case 16:       // 지역코드
+                            basicDto.setJiyeog( convString( cell ) );
+                            break;
+                        case 17:       // 주소
+                            basicDto.setJuso( convString( cell ) );
+                            break;
+                        case 18:       // 도1
+                            basicDto.setDo1( convString( cell ) );
+                            break;
+                        case 19:       // 시구1
+                            basicDto.setSigu1( convString( cell ) );
+                            break;
+                        case 20:       // 동1
+                            basicDto.setDong1( convString( cell ) );
+                            break;
+                        case 21:       // 동2
+                            basicDto.setDong2( convString( cell ) );
                             break;
                     }
                 }
 
-                if( danjiDto.getDoo() == null || danjiDto.getDoo().isEmpty() ) continue;
+                if( basicDto.getIndex() == null || basicDto.getIndex().isEmpty() ) continue;
 
-                danjiList.add( danjiDto );
+                basicList.add( basicDto );
                 if( row.getRowNum() % 100 == 0 ) {
-                    //sampleService.saveBasicExcel( rawList );
+                    sampleService.saveBasicExcel( basicList );
 
                     //log.debug("100건 단위 :: {}", rawList);
-
-                    danjiList = new ArrayList<>();
+                    basicList = new ArrayList<>();
                 }
             }
 
-            log.debug( "남은 데이터 :: {}", danjiList );
-            //sampleService.saveBasicExcel( rawList );
+            log.debug( "남은 데이터 :: {}", basicList );
+            sampleService.saveBasicExcel( basicList );
 
         } catch( IOException e ) {
             log.debug( "엑셀 파일을 읽는 중 오류 발생 :: {}", e.getMessage() );
@@ -432,8 +481,10 @@ public class SampleController {
         FileInputStream fileInputStream = null;
         Workbook workbook = null;
 
-        sampleService.deleteRawAll();
+        sampleService.deletePyeongAll();
 
+        // 10억건의 데이터를 읽을 수 있도록 설정. Default 1억건.
+        IOUtils.setByteArrayMaxOverride(1000000000);
         try {
             // 엑셀 파일 읽기
             fileInputStream = new FileInputStream( file );
@@ -442,55 +493,114 @@ public class SampleController {
             log.debug( "시트갯수 :: {}", workbook.getNumberOfSheets() );
 
             Sheet sheet = workbook.getSheetAt( 1 );   // 첫 번째 시트 선택
-            DanjiDto danjiDto = null;
-            List<DanjiDto> danjiList = new ArrayList<>();
+            PyeongDto pyeongDto = null;
+            List<PyeongDto> pyeongList = new ArrayList<>();
             // 각 행을 반복하면서 데이터 읽기
             for( Row row : sheet ) {
                 if( row.getRowNum() == 0 ) continue;
-                if( row.getRowNum() <= 50 ) continue;
+                //if( row.getRowNum() > 50 ) continue;
                 //if( row.getRowNum() >= 44150 ) break;
 
-                danjiDto = new DanjiDto();
+                pyeongDto = new PyeongDto();
                 // 각 셀을 반복하면서 데이터 읽기
                 for( Cell cell : row ) {
                     //log.debug( "Index :: {} cell.getStringCellValue() :: {}", cell.getColumnIndex(), convString(cell) );
 
                     switch( cell.getColumnIndex() ) {
                         case 0:       // 코드번호
-                            danjiDto.setBunho( convString( cell ) );
+                            pyeongDto.setIndex( convString( cell ) );
                             break;
-                        case 1:       // 도
-                            danjiDto.setDoo( convString( cell ) );
+                        case 1:       // 코드번호
+                            pyeongDto.setBunho( convString( cell ) );
                             break;
-                        case 2:       // 시구
-                            danjiDto.setSigu( convString( cell ) );
+                        case 2:       // 도
+                            pyeongDto.setDoo( convString( cell ) );
                             break;
-                        case 3:       // hscpNo
-                            danjiDto.setHscpNo( convString( cell ) );
+                        case 3:       // 시구
+                            pyeongDto.setSigu( convString( cell ) );
                             break;
-                        case 4:       // hscpNm
-                            danjiDto.setHscpNm( convString( cell ) );
+                        case 4:       // hscpNo
+                            pyeongDto.setHscpNo( convString( cell ) );
                             break;
-                        case 5:       // 지역코드
-                            danjiDto.setJiyeog( convString( cell ) );
+                        case 5:       // hscpNm
+                            pyeongDto.setHscpNm( convString( cell ) );
+                            break;
+                        case 6:       // url
+                            pyeongDto.setUrl( convString( cell ) );
+                            break;
+                        case 7:       // ptpNo
+                            pyeongDto.setPtpNo( convString( cell ) );
+                            break;
+                        case 8:       // ptpNm
+                            pyeongDto.setPtpNm( convString( cell ) );
+                            break;
+                        case 9:       // splySpc
+                            pyeongDto.setSplySpc( convString( cell ) );
+                            break;
+                        case 10:       // exclsSpc
+                            pyeongDto.setExclsSpc( convString( cell ) );
+                            break;
+                        case 11:       // splySpcPyeong0WithUnit
+                            pyeongDto.setSplySpcPyeong0WithUnit( convString( cell ) );
+                            break;
+                        case 12:       // splySpcPyeong2WithUnit
+                            pyeongDto.setSplySpcPyeong2WithUnit( convString( cell ) );
+                            break;
+                        case 13:       // exclsSpcPyeong2WithUnit
+                            pyeongDto.setExclsSpcPyeong2WithUnit( convString( cell ) );
+                            break;
+                        case 14:       // exclsRate
+                            pyeongDto.setExclsRate( convString( cell ) );
+                            break;
+                        case 15:       // ptybyTotHsehCnt
+                            pyeongDto.setPtybyTotHsehCnt( convString( cell ) );
+                            break;
+                        case 16:       // hscpTypeCd
+                            pyeongDto.setHscpTypeCd( convString( cell ) );
+                            break;
+                        case 17:       // ptpOrder
+                            pyeongDto.setPtpOrder( convString( cell ) );
+                            break;
+                        case 18:       // ptpNmWithUnit
+                            pyeongDto.setPtpNmWithUnit( convString( cell ) );
+                            break;
+                        case 19:       // splySpcWithUnit
+                            pyeongDto.setSplySpcWithUnit( convString( cell ) );
+                            break;
+                        case 20:       // exclsSpcWithUnit
+                            pyeongDto.setExclsSpcWithUnit( convString( cell ) );
+                            break;
+                        case 21:       // roomCnt
+                            pyeongDto.setRoomCnt( convString( cell ) );
+                            break;
+                        case 22:       // bathroomCnt
+                            pyeongDto.setBathroomCnt( convString( cell ) );
+                            break;
+                        case 23:       // entranceType
+                            pyeongDto.setEntranceType( convString( cell ) );
+                            break;
+                        case 24:       // splySpc2
+                            pyeongDto.setSplySpc2( convString( cell ) );
+                            break;
+                        case 25:       // 공급면적
+                            pyeongDto.setMyeonjeog1( convString( cell ) );
                             break;
                     }
                 }
 
-                if( danjiDto.getDoo() == null || danjiDto.getDoo().isEmpty() ) continue;
+                if( pyeongDto.getBunho() == null || pyeongDto.getBunho().isEmpty() ) continue;
 
-                danjiList.add( danjiDto );
+                pyeongList.add( pyeongDto );
                 if( row.getRowNum() % 100 == 0 ) {
-                    //sampleService.savePyeongExcel( rawList );
+                    sampleService.savePyeongExcel( pyeongList );
 
                     //log.debug("100건 단위 :: {}", rawList);
-
-                    danjiList = new ArrayList<>();
+                    pyeongList = new ArrayList<>();
                 }
             }
 
-            log.debug( "남은 데이터 :: {}", danjiList );
-            //sampleService.savePyeongExcel( rawList );
+            log.debug( "남은 데이터 :: {}", pyeongList );
+            sampleService.savePyeongExcel( pyeongList );
 
         } catch( IOException e ) {
             log.debug( "엑셀 파일을 읽는 중 오류 발생 :: {}", e.getMessage() );
@@ -523,7 +633,7 @@ public class SampleController {
         FileInputStream fileInputStream = null;
         Workbook workbook = null;
 
-        sampleService.deleteRawAll();
+        sampleService.deleteJiyeogAll();
 
         try {
             // 엑셀 파일 읽기
@@ -533,55 +643,63 @@ public class SampleController {
             log.debug( "시트갯수 :: {}", workbook.getNumberOfSheets() );
 
             Sheet sheet = workbook.getSheetAt( 1 );   // 첫 번째 시트 선택
-            DanjiDto danjiDto = null;
-            List<DanjiDto> danjiList = new ArrayList<>();
+            JiyeogDto jiyeogDto = null;
+            List<JiyeogDto> jiyeogList = new ArrayList<>();
             // 각 행을 반복하면서 데이터 읽기
             for( Row row : sheet ) {
                 if( row.getRowNum() == 0 ) continue;
-                if( row.getRowNum() <= 50 ) continue;
+                //if( row.getRowNum() > 50 ) continue;
                 //if( row.getRowNum() >= 44150 ) break;
 
-                danjiDto = new DanjiDto();
+                jiyeogDto = new JiyeogDto();
                 // 각 셀을 반복하면서 데이터 읽기
                 for( Cell cell : row ) {
                     //log.debug( "Index :: {} cell.getStringCellValue() :: {}", cell.getColumnIndex(), convString(cell) );
 
                     switch( cell.getColumnIndex() ) {
-                        case 0:       // 코드번호
-                            danjiDto.setBunho( convString( cell ) );
+                        case 0:       // 도코드
+                            jiyeogDto.setDoo( convString( cell ) );
                             break;
-                        case 1:       // 도
-                            danjiDto.setDoo( convString( cell ) );
+                        case 1:       // 시구코드
+                            jiyeogDto.setSigu( convString( cell ) );
                             break;
-                        case 2:       // 시구
-                            danjiDto.setSigu( convString( cell ) );
+                        case 2:       // 동코드
+                            jiyeogDto.setDong( convString( cell ) );
                             break;
-                        case 3:       // hscpNo
-                            danjiDto.setHscpNo( convString( cell ) );
+                        case 3:       // 코드8
+                            jiyeogDto.setCode( convString( cell ) );
                             break;
-                        case 4:       // hscpNm
-                            danjiDto.setHscpNm( convString( cell ) );
+                        case 4:       // 법정동코드
+                            jiyeogDto.setBeobjeong( convString( cell ) );
                             break;
-                        case 5:       // 지역코드
-                            danjiDto.setJiyeog( convString( cell ) );
+                        case 5:       // 도
+                            jiyeogDto.setDo1( convString( cell ) );
+                            break;
+                        case 6:       // 시구
+                            jiyeogDto.setSigu1( convString( cell ) );
+                            break;
+                        case 7:       // 동1
+                            jiyeogDto.setDong1( convString( cell ) );
+                            break;
+                        case 8:       // 동2
+                            jiyeogDto.setDong2( convString( cell ) );
                             break;
                     }
                 }
 
-                if( danjiDto.getDoo() == null || danjiDto.getDoo().isEmpty() ) continue;
+                if( jiyeogDto.getDoo() == null || jiyeogDto.getDoo().isEmpty() ) continue;
 
-                danjiList.add( danjiDto );
+                jiyeogList.add( jiyeogDto );
                 if( row.getRowNum() % 100 == 0 ) {
-                    //sampleService.saveJiyeogExcel( rawList );
+                    sampleService.saveJiyeogExcel( jiyeogList );
 
                     //log.debug("100건 단위 :: {}", rawList);
-
-                    danjiList = new ArrayList<>();
+                    jiyeogList = new ArrayList<>();
                 }
             }
 
-            log.debug( "남은 데이터 :: {}", danjiList );
-            //sampleService.saveJiyeogExcel( rawList );
+            log.debug( "남은 데이터 :: {}", jiyeogList );
+            sampleService.saveJiyeogExcel( jiyeogList );
 
         } catch( IOException e ) {
             log.debug( "엑셀 파일을 읽는 중 오류 발생 :: {}", e.getMessage() );
@@ -605,8 +723,8 @@ public class SampleController {
     @PostMapping( "/sample/saveKbExcel.do" )
     public @ResponseBody SingleResult<MessageDto> saveKbExcel( Model model ) throws Exception {
 
-        log.debug( "filePath :: {}", jiyoegFilePath );
-        File file = new File( jiyoegFilePath );
+        log.debug( "filePath :: {}", kbFilePath );
+        File file = new File( kbFilePath );
 
         log.debug( "file.isFile() :: {}", file.isFile() );
 
@@ -614,7 +732,7 @@ public class SampleController {
         FileInputStream fileInputStream = null;
         Workbook workbook = null;
 
-        sampleService.deleteRawAll();
+        sampleService.deleteKbAll();
 
         try {
             // 엑셀 파일 읽기
@@ -624,55 +742,103 @@ public class SampleController {
             log.debug( "시트갯수 :: {}", workbook.getNumberOfSheets() );
 
             Sheet sheet = workbook.getSheetAt( 1 );   // 첫 번째 시트 선택
-            DanjiDto danjiDto = null;
-            List<DanjiDto> danjiList = new ArrayList<>();
+            KbDto kbDto = null;
+            List<KbDto> kbList = new ArrayList<>();
             // 각 행을 반복하면서 데이터 읽기
             for( Row row : sheet ) {
                 if( row.getRowNum() == 0 ) continue;
-                if( row.getRowNum() <= 50 ) continue;
+                //if( row.getRowNum() > 50 ) continue;
                 //if( row.getRowNum() >= 44150 ) break;
 
-                danjiDto = new DanjiDto();
+                kbDto = new KbDto();
                 // 각 셀을 반복하면서 데이터 읽기
                 for( Cell cell : row ) {
                     //log.debug( "Index :: {} cell.getStringCellValue() :: {}", cell.getColumnIndex(), convString(cell) );
 
                     switch( cell.getColumnIndex() ) {
-                        case 0:       // 코드번호
-                            danjiDto.setBunho( convString( cell ) );
+                        case 0:       // 시구
+                            kbDto.setSigu( convString( cell ) );
                             break;
-                        case 1:       // 도
-                            danjiDto.setDoo( convString( cell ) );
+                        case 1:       // url
+                            kbDto.setUrl( convString( cell ) );
                             break;
-                        case 2:       // 시구
-                            danjiDto.setSigu( convString( cell ) );
+                        case 2:       // 단지기본일련번호
+                            kbDto.setDanji( convString( cell ) );
                             break;
-                        case 3:       // hscpNo
-                            danjiDto.setHscpNo( convString( cell ) );
+                        case 3:       // 시세마감년월일
+                            kbDto.setSisemagam( convString( cell ) );
                             break;
-                        case 4:       // hscpNm
-                            danjiDto.setHscpNm( convString( cell ) );
+                        case 4:       // 시세물건식별자
+                            kbDto.setSisemulgeon( convString( cell ) );
                             break;
-                        case 5:       // 지역코드
-                            danjiDto.setJiyeog( convString( cell ) );
+                        case 5:       // 단지명
+                            kbDto.setDanjinm( convString( cell ) );
+                            break;
+                        case 6:       // 법정동코드
+                            kbDto.setBeobjek( convString( cell ) );
+                            break;
+                        case 7:       // 계약면적
+                            kbDto.setGyeyag( convString( cell ) );
+                            break;
+                        case 8:       // 공급면적
+                            kbDto.setGonggub( convString( cell ) );
+                            break;
+                        case 9:       // 전용면적
+                            kbDto.setJeonyong( convString( cell ) );
+                            break;
+                        case 10:       // 주택형타입내용
+                            kbDto.setType( convString( cell ) );
+                            break;
+                        case 11:       // 연결구분명
+                            kbDto.setGubun( convString( cell ) );
+                            break;
+                        case 12:       // 매매.하위평균
+                            kbDto.setMaemaega1( convString( cell ) );
+                            break;
+                        case 13:       // 매매.일반평균
+                            kbDto.setMaemaega2( convString( cell ) );
+                            break;
+                        case 14:       // 매매.상위평균
+                            kbDto.setMaemaega3( convString( cell ) );
+                            break;
+                        case 15:       // 전세.하위평균
+                            kbDto.setJeonse1( convString( cell ) );
+                            break;
+                        case 16:       // 전세.일반평균
+                            kbDto.setJeonse2( convString( cell ) );
+                            break;
+                        case 17:       // 전세.상위평균
+                            kbDto.setJeonse3( convString( cell ) );
+                            break;
+                        case 18:       // 주소
+                            kbDto.setJuso( convString( cell ) );
+                            break;
+                        case 19:       // 월세
+                            kbDto.setWolse( convString( cell ) );
+                            break;
+                        case 20:       // naver_code
+                            kbDto.setNaver( convString( cell ) );
+                            break;
+                        case 21:       // 공급면적_내림
+                            kbDto.setVcode( convString( cell ) );
                             break;
                     }
                 }
 
-                if( danjiDto.getDoo() == null || danjiDto.getDoo().isEmpty() ) continue;
+                if( kbDto.getSigu() == null || kbDto.getSigu().isEmpty() ) continue;
 
-                danjiList.add( danjiDto );
+                kbList.add( kbDto );
                 if( row.getRowNum() % 100 == 0 ) {
-                    //sampleService.saveKbExcel( rawList );
+                    sampleService.saveKbExcel( kbList );
 
                     //log.debug("100건 단위 :: {}", rawList);
 
-                    danjiList = new ArrayList<>();
+                    kbList = new ArrayList<>();
                 }
             }
 
-            log.debug( "남은 데이터 :: {}", danjiList );
-            //sampleService.saveKbExcel( rawList );
+            log.debug( "남은 데이터 :: {}", kbList );
+            sampleService.saveKbExcel( kbList );
 
         } catch( IOException e ) {
             log.debug( "엑셀 파일을 읽는 중 오류 발생 :: {}", e.getMessage() );

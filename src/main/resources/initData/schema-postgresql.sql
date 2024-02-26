@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS tb_basic (
     nanbang   VARCHAR(50),           -- 난방
     jiyeog    VARCHAR(30),           -- 지역코드
     juso      VARCHAR(300),          -- 주소
-    do1       VARCHAR(30),           -- 도1
+    do1       VARCHAR(300),          -- 도1
     sigu1     VARCHAR(30),           -- 시구1
     dong1     VARCHAR(30),           -- 동1
     dong2     VARCHAR(30),           -- 동2
@@ -149,6 +149,7 @@ DROP TABLE IF EXISTS tb_pyeong;
 
 CREATE TABLE IF NOT EXISTS tb_pyeong (
     id                      SERIAL NOT NULL,       -- PK
+    index                   VARCHAR(10) NOT NULL,  -- index
     bunho                   VARCHAR(30) NOT NULL,  -- 코드번호
     doo                     VARCHAR(100) NOT NULL, -- 도
     sigu                    VARCHAR(100) NOT NULL, -- 시구

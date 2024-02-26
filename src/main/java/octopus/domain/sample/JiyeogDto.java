@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class JiyeogDto {
 
+    private Long id;                         // PK
     private String doo;                      // 도코드             0
     private String sigu;                     // 시구코드           1
     private String dong;                     // 동코드             2

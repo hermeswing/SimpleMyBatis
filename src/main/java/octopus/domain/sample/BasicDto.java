@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class BasicDto {
 
+    private Long id;                   // PK
     private String index;              // index          0
     private String bunho;              // 코드번호       1
     private String doo;                // 도             2
