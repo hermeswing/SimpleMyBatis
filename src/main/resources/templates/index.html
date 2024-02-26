@@ -12,7 +12,11 @@
 
     <div class="content">
         <button type="button" onclick="rawExcelLoad()" class="btns fn_add_btn"><span>Raw 엑셀 Loading</span></button>
-        <button type="button" onclick="rawExcelLoad()" class="btns fn_add_btn"><span>Raw 엑셀 Loading</span></button>
+        <button type="button" onclick="danjiExcelLoad()" class="btns fn_add_btn"><span>단지정보 엑셀 Loading</span></button>
+        <button type="button" onclick="basicExcelLoad()" class="btns fn_add_btn"><span>기본정보 엑셀 Loading</span></button>
+        <button type="button" onclick="pyeongExcelLoad()" class="btns fn_add_btn"><span>평형정보 엑셀 Loading</span></button>
+        <button type="button" onclick="jiyeogExcelLoad()" class="btns fn_add_btn"><span>지역 엑셀 Loading</span></button>
+        <button type="button" onclick="kbExcelLoad()" class="btns fn_add_btn"><span>KB 엑셀 Loading</span></button>
     </div> <!--/* .content */-->
 </th:block>
 
@@ -34,6 +38,78 @@
                 alert(result.msg);
             });
         }
+
+        function danjiExcelLoad() {
+            const params = {}
+
+            // _api.call(url, params, method, returnType, 실행전수행할함수, 성공callback함수, 실패callback함수);
+            _api.call(`/sample/saveDanjiExcel.do`, params, 'post', 'json', null, function(request, status, error) {
+                alert('저장되었습니다.');
+            }, function(request, status, error) {
+                console.log("request :: ", request);
+                const result = request.responseJSON == null ? JSON.parse(request.responseText) : request.responseJSON;
+                //console.log("result.msg :: ", result.msg);
+                alert(result.msg);
+            });
+        }
+
+        function basicExcelLoad() {
+            const params = {}
+
+            // _api.call(url, params, method, returnType, 실행전수행할함수, 성공callback함수, 실패callback함수);
+            _api.call(`/sample/saveBasicExcel.do`, params, 'post', 'json', null, function(request, status, error) {
+                alert('저장되었습니다.');
+            }, function(request, status, error) {
+                console.log("request :: ", request);
+                const result = request.responseJSON == null ? JSON.parse(request.responseText) : request.responseJSON;
+                //console.log("result.msg :: ", result.msg);
+                alert(result.msg);
+            });
+        }
+
+        function pyeongExcelLoad() {
+            const params = {}
+
+            // _api.call(url, params, method, returnType, 실행전수행할함수, 성공callback함수, 실패callback함수);
+            _api.call(`/sample/savePyeongExcel.do`, params, 'post', 'json', null, function(request, status, error) {
+                alert('저장되었습니다.');
+            }, function(request, status, error) {
+                console.log("request :: ", request);
+                const result = request.responseJSON == null ? JSON.parse(request.responseText) : request.responseJSON;
+                //console.log("result.msg :: ", result.msg);
+                alert(result.msg);
+            });
+        }
+
+        function jiyeogExcelLoad() {
+            const params = {}
+
+            // _api.call(url, params, method, returnType, 실행전수행할함수, 성공callback함수, 실패callback함수);
+            _api.call(`/sample/saveJiyeogExcel.do`, params, 'post', 'json', null, function(request, status, error) {
+                alert('저장되었습니다.');
+            }, function(request, status, error) {
+                console.log("request :: ", request);
+                const result = request.responseJSON == null ? JSON.parse(request.responseText) : request.responseJSON;
+                //console.log("result.msg :: ", result.msg);
+                alert(result.msg);
+            });
+        }
+
+        function kbExcelLoad() {
+            const params = {}
+
+            // _api.call(url, params, method, returnType, 실행전수행할함수, 성공callback함수, 실패callback함수);
+            _api.call(`/sample/saveKbExcel.do`, params, 'post', 'json', null, function(request, status, error) {
+                alert('저장되었습니다.');
+            }, function(request, status, error) {
+                console.log("request :: ", request);
+                const result = request.responseJSON == null ? JSON.parse(request.responseText) : request.responseJSON;
+                //console.log("result.msg :: ", result.msg);
+                alert(result.msg);
+            });
+        }
+
+
         /*]]>*/
     </script>
 </th:block>

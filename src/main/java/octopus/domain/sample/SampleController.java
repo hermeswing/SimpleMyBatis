@@ -45,6 +45,12 @@ public class SampleController {
     @Value( "${pyeong.file.path}" )
     private String pyeongFilePath;
 
+    @Value( "${jiyoeg.file.path}" )
+    private String jiyoegFilePath;
+
+    @Value( "${kb.file.path}" )
+    private String kbFilePath;
+
     @GetMapping( "/sample/sample.do" )
     public String openSample( Model model ) {
         log.debug( "여기" );
@@ -202,7 +208,7 @@ public class SampleController {
 
                 rawList.add( rawDto );
                 if( row.getRowNum() % 100 == 0 ) {
-                    //sampleService.saveRrawExcel( rawList );
+                    //sampleService.saveRawExcel( rawList );
 
                     //log.debug("100건 단위 :: {}", rawList);
 
@@ -211,7 +217,7 @@ public class SampleController {
             }
 
             log.debug( "남은 데이터 :: {}", rawList );
-            //sampleService.saveRrawExcel( rawList );
+            //sampleService.saveRawExcel( rawList );
 
         } catch( IOException e ) {
             log.debug( "엑셀 파일을 읽는 중 오류 발생 :: {}", e.getMessage() );
@@ -293,7 +299,7 @@ public class SampleController {
 
                 danjiList.add( danjiDto );
                 if( row.getRowNum() % 100 == 0 ) {
-                    //sampleService.rawExcelSave( rawList );
+                    //sampleService.saveDanjiExcel( rawList );
 
                     //log.debug("100건 단위 :: {}", rawList);
 
@@ -302,7 +308,371 @@ public class SampleController {
             }
 
             log.debug( "남은 데이터 :: {}", danjiList );
-            //sampleService.rawExcelSave( rawList );
+            //sampleService.saveDanjiExcel( rawList );
+
+        } catch( IOException e ) {
+            log.debug( "엑셀 파일을 읽는 중 오류 발생 :: {}", e.getMessage() );
+        } finally {
+            try {
+                // 파일 스트림 닫기
+                fileInputStream.close();
+                workbook.close();
+            } catch( IOException ioe ) {
+                log.debug( "엑셀 파일을 닫는 중 오류 발생 :: {}", ioe.getMessage() );
+            } catch( Exception e ) {
+                log.debug( "오류 발생 :: {}", e.getMessage() );
+            }
+        }
+
+
+        MessageDto message = new MessageDto( "성공하였습니다.", "/", RequestMethod.POST, null );
+        return responseService.getSingleResult( message );
+    }
+
+    @PostMapping( "/sample/saveBasicExcel.do" )
+    public @ResponseBody SingleResult<MessageDto> saveBasicExcel( Model model ) throws Exception {
+
+        log.debug( "filePath :: {}", basicFilePath );
+        File file = new File( basicFilePath );
+
+        log.debug( "file.isFile() :: {}", file.isFile() );
+
+        // 엑셀 파일 읽기
+        FileInputStream fileInputStream = null;
+        Workbook workbook = null;
+
+        sampleService.deleteRawAll();
+
+        try {
+            // 엑셀 파일 읽기
+            fileInputStream = new FileInputStream( file );
+            workbook = WorkbookFactory.create( fileInputStream );
+
+            log.debug( "시트갯수 :: {}", workbook.getNumberOfSheets() );
+
+            Sheet sheet = workbook.getSheetAt( 1 );   // 첫 번째 시트 선택
+            DanjiDto danjiDto = null;
+            List<DanjiDto> danjiList = new ArrayList<>();
+            // 각 행을 반복하면서 데이터 읽기
+            for( Row row : sheet ) {
+                if( row.getRowNum() == 0 ) continue;
+                if( row.getRowNum() <= 50 ) continue;
+                //if( row.getRowNum() >= 44150 ) break;
+
+                danjiDto = new DanjiDto();
+                // 각 셀을 반복하면서 데이터 읽기
+                for( Cell cell : row ) {
+                    //log.debug( "Index :: {} cell.getStringCellValue() :: {}", cell.getColumnIndex(), convString(cell) );
+
+                    switch( cell.getColumnIndex() ) {
+                        case 0:       // 코드번호
+                            danjiDto.setBunho( convString( cell ) );
+                            break;
+                        case 1:       // 도
+                            danjiDto.setDoo( convString( cell ) );
+                            break;
+                        case 2:       // 시구
+                            danjiDto.setSigu( convString( cell ) );
+                            break;
+                        case 3:       // hscpNo
+                            danjiDto.setHscpNo( convString( cell ) );
+                            break;
+                        case 4:       // hscpNm
+                            danjiDto.setHscpNm( convString( cell ) );
+                            break;
+                        case 5:       // 지역코드
+                            danjiDto.setJiyeog( convString( cell ) );
+                            break;
+                    }
+                }
+
+                if( danjiDto.getDoo() == null || danjiDto.getDoo().isEmpty() ) continue;
+
+                danjiList.add( danjiDto );
+                if( row.getRowNum() % 100 == 0 ) {
+                    //sampleService.saveBasicExcel( rawList );
+
+                    //log.debug("100건 단위 :: {}", rawList);
+
+                    danjiList = new ArrayList<>();
+                }
+            }
+
+            log.debug( "남은 데이터 :: {}", danjiList );
+            //sampleService.saveBasicExcel( rawList );
+
+        } catch( IOException e ) {
+            log.debug( "엑셀 파일을 읽는 중 오류 발생 :: {}", e.getMessage() );
+        } finally {
+            try {
+                // 파일 스트림 닫기
+                fileInputStream.close();
+                workbook.close();
+            } catch( IOException ioe ) {
+                log.debug( "엑셀 파일을 닫는 중 오류 발생 :: {}", ioe.getMessage() );
+            } catch( Exception e ) {
+                log.debug( "오류 발생 :: {}", e.getMessage() );
+            }
+        }
+
+
+        MessageDto message = new MessageDto( "성공하였습니다.", "/", RequestMethod.POST, null );
+        return responseService.getSingleResult( message );
+    }
+
+    @PostMapping( "/sample/savePyeongExcel.do" )
+    public @ResponseBody SingleResult<MessageDto> savePyeongExcel( Model model ) throws Exception {
+
+        log.debug( "filePath :: {}", pyeongFilePath );
+        File file = new File( pyeongFilePath );
+
+        log.debug( "file.isFile() :: {}", file.isFile() );
+
+        // 엑셀 파일 읽기
+        FileInputStream fileInputStream = null;
+        Workbook workbook = null;
+
+        sampleService.deleteRawAll();
+
+        try {
+            // 엑셀 파일 읽기
+            fileInputStream = new FileInputStream( file );
+            workbook = WorkbookFactory.create( fileInputStream );
+
+            log.debug( "시트갯수 :: {}", workbook.getNumberOfSheets() );
+
+            Sheet sheet = workbook.getSheetAt( 1 );   // 첫 번째 시트 선택
+            DanjiDto danjiDto = null;
+            List<DanjiDto> danjiList = new ArrayList<>();
+            // 각 행을 반복하면서 데이터 읽기
+            for( Row row : sheet ) {
+                if( row.getRowNum() == 0 ) continue;
+                if( row.getRowNum() <= 50 ) continue;
+                //if( row.getRowNum() >= 44150 ) break;
+
+                danjiDto = new DanjiDto();
+                // 각 셀을 반복하면서 데이터 읽기
+                for( Cell cell : row ) {
+                    //log.debug( "Index :: {} cell.getStringCellValue() :: {}", cell.getColumnIndex(), convString(cell) );
+
+                    switch( cell.getColumnIndex() ) {
+                        case 0:       // 코드번호
+                            danjiDto.setBunho( convString( cell ) );
+                            break;
+                        case 1:       // 도
+                            danjiDto.setDoo( convString( cell ) );
+                            break;
+                        case 2:       // 시구
+                            danjiDto.setSigu( convString( cell ) );
+                            break;
+                        case 3:       // hscpNo
+                            danjiDto.setHscpNo( convString( cell ) );
+                            break;
+                        case 4:       // hscpNm
+                            danjiDto.setHscpNm( convString( cell ) );
+                            break;
+                        case 5:       // 지역코드
+                            danjiDto.setJiyeog( convString( cell ) );
+                            break;
+                    }
+                }
+
+                if( danjiDto.getDoo() == null || danjiDto.getDoo().isEmpty() ) continue;
+
+                danjiList.add( danjiDto );
+                if( row.getRowNum() % 100 == 0 ) {
+                    //sampleService.savePyeongExcel( rawList );
+
+                    //log.debug("100건 단위 :: {}", rawList);
+
+                    danjiList = new ArrayList<>();
+                }
+            }
+
+            log.debug( "남은 데이터 :: {}", danjiList );
+            //sampleService.savePyeongExcel( rawList );
+
+        } catch( IOException e ) {
+            log.debug( "엑셀 파일을 읽는 중 오류 발생 :: {}", e.getMessage() );
+        } finally {
+            try {
+                // 파일 스트림 닫기
+                fileInputStream.close();
+                workbook.close();
+            } catch( IOException ioe ) {
+                log.debug( "엑셀 파일을 닫는 중 오류 발생 :: {}", ioe.getMessage() );
+            } catch( Exception e ) {
+                log.debug( "오류 발생 :: {}", e.getMessage() );
+            }
+        }
+
+
+        MessageDto message = new MessageDto( "성공하였습니다.", "/", RequestMethod.POST, null );
+        return responseService.getSingleResult( message );
+    }
+
+    @PostMapping( "/sample/saveJiyeogExcel.do" )
+    public @ResponseBody SingleResult<MessageDto> saveJiyeogExcel( Model model ) throws Exception {
+
+        log.debug( "filePath :: {}", jiyoegFilePath );
+        File file = new File( jiyoegFilePath );
+
+        log.debug( "file.isFile() :: {}", file.isFile() );
+
+        // 엑셀 파일 읽기
+        FileInputStream fileInputStream = null;
+        Workbook workbook = null;
+
+        sampleService.deleteRawAll();
+
+        try {
+            // 엑셀 파일 읽기
+            fileInputStream = new FileInputStream( file );
+            workbook = WorkbookFactory.create( fileInputStream );
+
+            log.debug( "시트갯수 :: {}", workbook.getNumberOfSheets() );
+
+            Sheet sheet = workbook.getSheetAt( 1 );   // 첫 번째 시트 선택
+            DanjiDto danjiDto = null;
+            List<DanjiDto> danjiList = new ArrayList<>();
+            // 각 행을 반복하면서 데이터 읽기
+            for( Row row : sheet ) {
+                if( row.getRowNum() == 0 ) continue;
+                if( row.getRowNum() <= 50 ) continue;
+                //if( row.getRowNum() >= 44150 ) break;
+
+                danjiDto = new DanjiDto();
+                // 각 셀을 반복하면서 데이터 읽기
+                for( Cell cell : row ) {
+                    //log.debug( "Index :: {} cell.getStringCellValue() :: {}", cell.getColumnIndex(), convString(cell) );
+
+                    switch( cell.getColumnIndex() ) {
+                        case 0:       // 코드번호
+                            danjiDto.setBunho( convString( cell ) );
+                            break;
+                        case 1:       // 도
+                            danjiDto.setDoo( convString( cell ) );
+                            break;
+                        case 2:       // 시구
+                            danjiDto.setSigu( convString( cell ) );
+                            break;
+                        case 3:       // hscpNo
+                            danjiDto.setHscpNo( convString( cell ) );
+                            break;
+                        case 4:       // hscpNm
+                            danjiDto.setHscpNm( convString( cell ) );
+                            break;
+                        case 5:       // 지역코드
+                            danjiDto.setJiyeog( convString( cell ) );
+                            break;
+                    }
+                }
+
+                if( danjiDto.getDoo() == null || danjiDto.getDoo().isEmpty() ) continue;
+
+                danjiList.add( danjiDto );
+                if( row.getRowNum() % 100 == 0 ) {
+                    //sampleService.saveJiyeogExcel( rawList );
+
+                    //log.debug("100건 단위 :: {}", rawList);
+
+                    danjiList = new ArrayList<>();
+                }
+            }
+
+            log.debug( "남은 데이터 :: {}", danjiList );
+            //sampleService.saveJiyeogExcel( rawList );
+
+        } catch( IOException e ) {
+            log.debug( "엑셀 파일을 읽는 중 오류 발생 :: {}", e.getMessage() );
+        } finally {
+            try {
+                // 파일 스트림 닫기
+                fileInputStream.close();
+                workbook.close();
+            } catch( IOException ioe ) {
+                log.debug( "엑셀 파일을 닫는 중 오류 발생 :: {}", ioe.getMessage() );
+            } catch( Exception e ) {
+                log.debug( "오류 발생 :: {}", e.getMessage() );
+            }
+        }
+
+
+        MessageDto message = new MessageDto( "성공하였습니다.", "/", RequestMethod.POST, null );
+        return responseService.getSingleResult( message );
+    }
+
+    @PostMapping( "/sample/saveKbExcel.do" )
+    public @ResponseBody SingleResult<MessageDto> saveKbExcel( Model model ) throws Exception {
+
+        log.debug( "filePath :: {}", jiyoegFilePath );
+        File file = new File( jiyoegFilePath );
+
+        log.debug( "file.isFile() :: {}", file.isFile() );
+
+        // 엑셀 파일 읽기
+        FileInputStream fileInputStream = null;
+        Workbook workbook = null;
+
+        sampleService.deleteRawAll();
+
+        try {
+            // 엑셀 파일 읽기
+            fileInputStream = new FileInputStream( file );
+            workbook = WorkbookFactory.create( fileInputStream );
+
+            log.debug( "시트갯수 :: {}", workbook.getNumberOfSheets() );
+
+            Sheet sheet = workbook.getSheetAt( 1 );   // 첫 번째 시트 선택
+            DanjiDto danjiDto = null;
+            List<DanjiDto> danjiList = new ArrayList<>();
+            // 각 행을 반복하면서 데이터 읽기
+            for( Row row : sheet ) {
+                if( row.getRowNum() == 0 ) continue;
+                if( row.getRowNum() <= 50 ) continue;
+                //if( row.getRowNum() >= 44150 ) break;
+
+                danjiDto = new DanjiDto();
+                // 각 셀을 반복하면서 데이터 읽기
+                for( Cell cell : row ) {
+                    //log.debug( "Index :: {} cell.getStringCellValue() :: {}", cell.getColumnIndex(), convString(cell) );
+
+                    switch( cell.getColumnIndex() ) {
+                        case 0:       // 코드번호
+                            danjiDto.setBunho( convString( cell ) );
+                            break;
+                        case 1:       // 도
+                            danjiDto.setDoo( convString( cell ) );
+                            break;
+                        case 2:       // 시구
+                            danjiDto.setSigu( convString( cell ) );
+                            break;
+                        case 3:       // hscpNo
+                            danjiDto.setHscpNo( convString( cell ) );
+                            break;
+                        case 4:       // hscpNm
+                            danjiDto.setHscpNm( convString( cell ) );
+                            break;
+                        case 5:       // 지역코드
+                            danjiDto.setJiyeog( convString( cell ) );
+                            break;
+                    }
+                }
+
+                if( danjiDto.getDoo() == null || danjiDto.getDoo().isEmpty() ) continue;
+
+                danjiList.add( danjiDto );
+                if( row.getRowNum() % 100 == 0 ) {
+                    //sampleService.saveKbExcel( rawList );
+
+                    //log.debug("100건 단위 :: {}", rawList);
+
+                    danjiList = new ArrayList<>();
+                }
+            }
+
+            log.debug( "남은 데이터 :: {}", danjiList );
+            //sampleService.saveKbExcel( rawList );
 
         } catch( IOException e ) {
             log.debug( "엑셀 파일을 읽는 중 오류 발생 :: {}", e.getMessage() );

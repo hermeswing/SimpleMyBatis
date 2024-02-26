@@ -4,7 +4,7 @@
 <mapper namespace="octopus.domain.sample.SampleMapper">
 
      <!-- Raw 저장 -->
-    <insert id="saveRrawExcel" parameterType="octopus.domain.sample.RawDto" useGeneratedKeys="true" keyProperty="id">
+    <insert id="saveRawExcel" parameterType="octopus.domain.sample.RawDto" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO tb_raw (
            doo                           -- 도                       0
          , sigu                          -- 시구                     1

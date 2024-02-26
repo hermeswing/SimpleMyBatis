@@ -21,10 +21,10 @@ public class SampleService {
      * @return Generated PK
      */
     @Transactional
-    public void saveRrawExcel( final List<RawDto>  rawList) {
+    public void saveRawExcel( final List<RawDto> rawList ) {
 
-        for(RawDto rawDto : rawList) {
-            sampleMapper.saveRrawExcel( rawDto );
+        for( RawDto rawDto : rawList ) {
+            sampleMapper.saveRawExcel( rawDto );
         }
 
     }
@@ -37,14 +37,14 @@ public class SampleService {
     /**
      * 엑셀 저장
      *
-     * @param rawList - 엑셀 데이터
+     * @param danjiList - 엑셀 데이터
      * @return Generated PK
      */
     @Transactional
-    public void danjiExcelSave( final List<RawDto>  rawList) {
+    public void danjiExcelSave( final List<DanjiDto> danjiList ) {
 
-        for(RawDto rawDto : rawList) {
-            sampleMapper.saveDanjiExcel( rawDto );
+        for( DanjiDto danjiDto : danjiList ) {
+            sampleMapper.saveDanjiExcel( danjiDto );
         }
 
     }
@@ -52,5 +52,85 @@ public class SampleService {
     @Transactional
     public void deleteDanjiAll() {
         sampleMapper.deleteDanjiAll();
+    }
+
+    /**
+     * 엑셀 저장
+     *
+     * @param basicList - 엑셀 데이터
+     * @return Generated PK
+     */
+    @Transactional
+    public void saveBasicExcel( final List<BasicDto> basicList ) {
+
+        for( BasicDto basicDto : basicList ) {
+            sampleMapper.saveBasicExcel( basicDto );
+        }
+
+    }
+
+    @Transactional
+    public void saveBasicExcel() {
+        sampleMapper.deleteBasicAll();
+    }
+
+    /**
+     * 엑셀 저장
+     *
+     * @param pyeongList - 엑셀 데이터
+     * @return Generated PK
+     */
+    @Transactional
+    public void savePyeongExcel( final List<PyeongDto> pyeongList ) {
+
+        for( PyeongDto pyeongDto : pyeongList ) {
+            sampleMapper.savePyeongExcel( pyeongDto );
+        }
+
+    }
+
+    @Transactional
+    public void savePyeongExcel() {
+        sampleMapper.deletePyeongAll();
+    }
+
+    /**
+     * 엑셀 저장
+     *
+     * @param jiyeogList - 엑셀 데이터
+     * @return Generated PK
+     */
+    @Transactional
+    public void saveJiyeogExcel( final List<JiyeogDto> jiyeogList ) {
+
+        for( JiyeogDto jiyeogDto : jiyeogList ) {
+            sampleMapper.saveJiyoegExcel( jiyeogDto );
+        }
+
+    }
+
+    @Transactional
+    public void deleteJiyoegAll() {
+        sampleMapper.deleteJiyoegAll();
+    }
+
+    /**
+     * 엑셀 저장
+     *
+     * @param kbList - 엑셀 데이터
+     * @return Generated PK
+     */
+    @Transactional
+    public void saveKbExcel( final List<KbDto> kbList ) {
+
+        for( KbDto kbDto : kbList ) {
+            sampleMapper.saveKbExcel( kbDto );
+        }
+
+    }
+
+    @Transactional
+    public void saveKbExcel() {
+        sampleMapper.deleteKbAll();
     }
 }
